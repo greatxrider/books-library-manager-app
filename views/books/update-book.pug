@@ -1,12 +1,16 @@
 extends ../layout
 
 block head 
-    title #{book.title}
+    title #{title}
+    script.
+      function confirmDelete() {
+        return confirm('Do you really want to delete this book?');
+      }
 
 block content 
     h1 Update Book
-    form
-        include form-error
+    include form-error
+    form(method="post" action=`/books/${book.id}`)
         p
             label(for="title") Title
             input(name="title" type="text" id="title" value=book.title)
@@ -22,9 +26,8 @@ block content
         p
             input(type="submit" value="Update Book")
 
-        form(method="post" action=`/books/${book.id}/delete` onsubmit="return confirm('Do you really want to delete this book?');")
-            p
-                a.button(href="/books") Cancel
-            p
-                input(type="submit" value="Delete Book")
-            
+    form(method="post" action=`/books/${book.id}/delete` onsubmit="return confirmDelete();")
+        p
+            a.button(href="/books") Cancel
+        p
+            input(type="submit" value="Delete Book")

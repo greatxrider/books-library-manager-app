@@ -1,12 +1,12 @@
 extends ../layout
 
 block head
-    title New Book
+    title= title 
 
 block content 
     h1 New Book
-    form
-        include form-error
+    include form-error
+    form(method='post' action=`/books/new`)
         p
             label(for="title") Title
             input(name="title" type="text" id="title")
@@ -18,7 +18,7 @@ block content
             input(name="genre" type="text" id="genre")
         p
             label(for="year") Year
-            input(name="year" type="text" id="year")
+            input(name="year" type="number" id="year")
         p
             input(type="submit" value="Create New Book")
         p

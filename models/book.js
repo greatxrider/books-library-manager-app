@@ -59,7 +59,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        notNull: {
+        notEmpty: {
+          notNull: {
+            msg: 'Please provide a value for "year"',
+          },
           msg: 'Please provide a value for "year"',
         },
         min: {
