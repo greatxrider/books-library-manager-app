@@ -38,16 +38,15 @@ block content
       .pagination
         if page
           if page > 1
-            a(href=`${currentPath}?page=${page - 1}`) Previous
+            a(href=`${currentPath}page/${page - 1}`) Previous
           else
             span Previous
           each num in [...Array(totalPages).keys()].map(n => n + 1)
             if num === page
               span= num
             else
-              a(href=`${currentPath}?page=${num}`)= num
-
+              a(href=`${currentPath}page/${num}`)= num
           if page < totalPages
-            a(href=`${currentPath}?page=${page + 1}`) Next
+            a(href=`${currentPath}page/${page + 1}`) Next
           else
             span Next
