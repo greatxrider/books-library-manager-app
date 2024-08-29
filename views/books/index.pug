@@ -2,24 +2,52 @@ extends ../layout
 
 block head
   title= title
+  script.
+    function handleSubmit(event) {
+      event.preventDefault();
+      console.log('search!');
+    }
 
 block content
   div.container 
-    h1 Books 
-    p 
+    h1 
+      a(href="/") Books 
+    div.header-actions 
       a.button(href="/books/new") Create New Book
-    table
-      thead
-        tr 
-          th Title
-          th Author
-          th Genre
-          th Year 
-      tbody
-        each book in books 
+      form.search-form(action="/books/search", method="GET")
+        input.search-input(type="text", name="query", placeholder="Search for books...")
+        input.search-button(type="submit" value="Search")
+    if rows.length === 0
+      include no-results
+    else
+      table
+        thead
           tr 
-            td 
-              a(href=`/books/${book.id}`) #{book.title}
-            td #{book.author}
-            td #{book.genre}   
-            td #{book.year}
+            th Title
+            th Author
+            th Genre
+            th Year
+        tbody
+          each book in rows
+            tr
+              td
+                a(href=`/books/${book.dataValues.id}`) #{book.dataValues.title}
+              td #{book.dataValues.author}
+              td #{book.dataValues.genre}
+              td #{book.dataValues.year}
+      .pagination
+        if page
+          if page > 1
+            a(href=`${currentPath}?page=${page - 1}`) Previous
+          else
+            span Previous
+          each num in [...Array(totalPages).keys()].map(n => n + 1)
+            if num === page
+              span= num
+            else
+              a(href=`${currentPath}?page=${num}`)= num
+
+          if page < totalPages
+            a(href=`${currentPath}?page=${page + 1}`) Next
+          else
+            span Next
