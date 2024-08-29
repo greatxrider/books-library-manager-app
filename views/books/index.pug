@@ -14,8 +14,8 @@ block content
       a(href="/") Books 
     div.header-actions 
       a.button(href="/books/new") Create New Book
-      form.search-form(action="/books/search", method="GET")
-        input.search-input(type="text", name="query", placeholder="Search for books...")
+      form.search-form(action="/books/search/page/1", method="GET")
+        input.search-input(type="text", name="query", placeholder="Search for books..." required)
         input.search-button(type="submit" value="Search")
     if rows.length === 0
       include no-results
@@ -36,17 +36,27 @@ block content
               td #{book.dataValues.genre}
               td #{book.dataValues.year}
       .pagination
-        if page
-          if page > 1
-            a(href=`${currentPath}page/${page - 1}`) Previous
+        if page > 1
+          if query
+            a(href=`/books/${currentPath}/${page - 1}?query=${query}`) Previous
           else
-            span Previous
-          each num in [...Array(totalPages).keys()].map(n => n + 1)
-            if num === page
-              span= num
+            a(href=`/books/${currentPath}/${page - 1}/`) Previous
+        else
+          span Previous 
+
+        each num in [...Array(totalPages).keys()].map(n => n + 1)
+          if num === page
+            span= num
+          else
+            if query
+              a(href=`/books/${currentPath}/${num}?query=${query}`)= num
             else
-              a(href=`${currentPath}page/${num}`)= num
-          if page < totalPages
-            a(href=`${currentPath}page/${page + 1}`) Next
+              a(href=`/books/${currentPath}/${num}/`)= num
+
+        if page < totalPages
+          if query
+            a(href=`/books/${currentPath}/${page + 1}?query=${query}`) Next
           else
-            span Next
+            a(href=`/books/${currentPath}/${page + 1}/`) Next
+        else
+          span Next 

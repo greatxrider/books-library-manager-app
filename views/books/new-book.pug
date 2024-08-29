@@ -8,19 +8,19 @@ block content
         h1.newbook-title New Book
         include form-error
         form(method='post' action=`/books/new`)
-            p
-                label(for="title") Title
-                input(name="title" type="text" id="title")
-            p
-                label(for="author") Author
-                input(name="author" type="text" id="author")
-            p
-                label(for="genre") Genre
-                input(name="genre" type="text" id="genre")
-            p
-                label(for="year") Year
-                input(name="year" type="number" id="year")
-            p
-                input(type="submit" value="Create New Book")
-            p
-                a.button(href="/books") Cancel
+        p
+            label(for="title") Title
+            input(name="title" type="text" id="title" placeholder="Enter the book title")
+        p
+            label(for="author") Author
+            input(name="author" type="text" id="author" placeholder="Enter the author's name")
+        p
+            label(for="genre") Genre
+            input(name="genre" type="text" id="genre" placeholder="Enter the genre")
+        p
+            label(for="year") Year
+            input(name="year" type="number" id="year" placeholder="Enter the publication year")
+        p
+            input(type="submit" value="Create New Book")
+        p
+            a.button(href="/books") Cancel 

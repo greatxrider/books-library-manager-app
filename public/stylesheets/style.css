@@ -4,6 +4,7 @@ body {
   flex-direction: column;
   align-items: center;
   margin: 0 !important;
+  background-image: url('/images/library.jpg');
 }
 
 a {
@@ -27,12 +28,6 @@ input[type=submit] {
   border-radius: 2px;
   cursor: pointer;
 }
-
-/* form a.button,
-input[type=submit] {
-  margin-left: 140px;
-  transition: 0.4s;
-} */
 
 input[type=submit] {
   border: 0;
@@ -89,7 +84,8 @@ input {
   font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
   font-size: 14px;
   border-radius: 2px;
-  border-color: #E7E7E7;
+  border: 1px solid #ddd;
+  background-color: #ffffff;
   transition: 0.4s;
 }
 
@@ -97,6 +93,16 @@ input[type=text],
 input[type=number] {
   margin-left: 7px;
   width: 300px;
+}
+
+/* Add focus and hover styles for better user experience */
+input:focus,
+input:hover {
+  border-color: #01b189;
+  background-color: #e6f7f4;
+  outline: none;
+  box-shadow: 0 0 5px #01b18980;
+  outline: 1px solid #01b189;
 }
 
 .error {
@@ -142,9 +148,7 @@ footer.footer {
   text-align: center;
   padding: 10px 0;
   background-color: #f8f9fa;
-  /* Light background for footer */
   border-top: 1px solid #e9ecef;
-  /* Subtle border at the top */
   position: relative;
   bottom: 0;
   max-width: 800px;
@@ -160,7 +164,6 @@ footer p {
 .header-actions {
   display: flex;
   flex-direction: row;
-  /* Change to row for horizontal alignment */
   align-items: center;
   justify-content: space-between;
   text-align: center;
@@ -185,11 +188,12 @@ input[type='text'].search-input {
   margin-right: 10px;
   width: 200px;
   max-width: 100%;
+  background-color: #ffffff;
 }
 
 input[type='text'].search-input:hover {
   border-color: #01b189;
-  box-shadow: 0 0 5px rgba(1, 177, 137, 0.5);
+  box-shadow: 0 0 5px #01b18980;
 }
 
 input[type='text'].search-input:focus-visible {
@@ -238,7 +242,7 @@ input[type='text'].search-input:focus-visible {
 
 /* Block container */
 .block-container {
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.95);
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -257,7 +261,7 @@ input[type='text'].search-input:focus-visible {
 .pagination {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin: 20px;
 }
 
 .pagination a,

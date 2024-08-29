@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Book = require('../models').Book;
 const { Op } = require('../models');
+const limit = 8;
 
 /* Handler function to wrap each route. */
 function asyncHandler(cb) {
@@ -17,28 +18,14 @@ function asyncHandler(cb) {
 
 /* GET books listing. */
 router.get('/', asyncHandler(async (req, res) => {
-    const page = parseInt(req.query.page) || 1; // Default to page 1
-    const limit = 2; // Number of items per page
-    const offset = (page - 1) * limit;
-
-    const { rows, count } = await Book.findAndCountAll({
-        order: [['createdAt', 'DESC']],
-        limit,
-        offset
-    });
-
-    const totalPages = Math.ceil(count / limit);
-    const currentPath = req.baseUrl + req.path;
-    res.render('books/index', { rows, title: 'Books', page, totalPages, currentPath });
+    res.redirect('/books/page/1');
 }));
 
 /* GET search books */
-router.get('/search', asyncHandler(async (req, res) => {
+router.get('/search/page/:pageNumber', asyncHandler(async (req, res) => {
     const { query } = req.query;
-    const page = parseInt(req.query.page) || 1; // Default to page 1
-    const limit = 2; // Number of items per page
+    const page = parseInt(req.params.pageNumber) || 1;
     const offset = (page - 1) * limit;
-
     let books = [];
     if (query) {
         try {
@@ -55,7 +42,6 @@ router.get('/search', asyncHandler(async (req, res) => {
                 limit,
                 offset
             });
-
             if (books.rows.length === 0) {
                 const error = new Error(`No results found for query: "${query}"`);
                 error.status = 404;
@@ -77,10 +63,25 @@ router.get('/search', asyncHandler(async (req, res) => {
             offset
         });
     }
-
     const { rows, count } = books;
     const totalPages = Math.ceil(count / limit);
-    const currentPath = req.baseUrl + req.path;
+    const currentPath = 'search/page';
+    res.render('books/index', { rows, title: 'Books', page, totalPages, currentPath, query });
+}));
+
+router.get('/page/:pageNumber', asyncHandler(async (req, res) => {
+    const page = parseInt(req.params.pageNumber) || 1; // Default to page 1 if not provided
+    const offset = (page - 1) * limit;
+
+    // Fetch data from the database
+    const { rows, count } = await Book.findAndCountAll({
+        order: [['createdAt', 'DESC']],
+        limit,
+        offset
+    });
+
+    const totalPages = Math.ceil(count / limit);
+    const currentPath = 'page';
     res.render('books/index', { rows, title: 'Books', page, totalPages, currentPath });
 }));
 
