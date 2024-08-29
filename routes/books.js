@@ -4,7 +4,11 @@ const Book = require('../models').Book;
 const { Op } = require('../models');
 const limit = 8;
 
-/* Handler function to wrap each route. */
+/**
+ * Handler function to wrap each route.
+ * @param {Function} cb - The callback function to wrap.
+ * @returns {Function} - The wrapped function.
+ */
 function asyncHandler(cb) {
     return async (req, res, next) => {
         try {
@@ -16,12 +20,20 @@ function asyncHandler(cb) {
     };
 }
 
-/* GET books listing. */
+/**
+ * GET books listing.
+ * Redirects to the first page of books.
+ */
 router.get('/', asyncHandler(async (req, res) => {
     res.redirect('/books/page/1');
 }));
 
-/* GET search books */
+/**
+ * GET search books.
+ * Searches for books based on query parameters and paginates the results.
+ * @param {string} req.query.query - The search query.
+ * @param {number} req.params.pageNumber - The page number for pagination.
+ */
 router.get('/search/page/:pageNumber', asyncHandler(async (req, res) => {
     const { query } = req.query;
     const page = parseInt(req.params.pageNumber) || 1;
@@ -69,6 +81,11 @@ router.get('/search/page/:pageNumber', asyncHandler(async (req, res) => {
     res.render('books/index', { rows, title: 'Books', page, totalPages, currentPath, query });
 }));
 
+/**
+ * GET books listing with pagination.
+ * Fetches and displays a paginated list of books.
+ * @param {number} req.params.pageNumber - The page number for pagination.
+ */
 router.get('/page/:pageNumber', asyncHandler(async (req, res) => {
     const page = parseInt(req.params.pageNumber) || 1; // Default to page 1 if not provided
     const offset = (page - 1) * limit;
@@ -85,12 +102,19 @@ router.get('/page/:pageNumber', asyncHandler(async (req, res) => {
     res.render('books/index', { rows, title: 'Books', page, totalPages, currentPath });
 }));
 
-/* GET shows create new book form */
+/**
+ * GET shows create new book form.
+ * Renders the form to create a new book.
+ */
 router.get('/new', asyncHandler(async (req, res) => {
     res.render('books/new-book', { book: {}, title: "Books" });
 }));
 
-/* POST create new book */
+/**
+ * POST create new book.
+ * Handles the creation of a new book and saves it to the database.
+ * @param {Object} req.body - The book data to create.
+ */
 router.post('/new', asyncHandler(async (req, res) => {
     let book;
     try {
@@ -106,7 +130,11 @@ router.post('/new', asyncHandler(async (req, res) => {
     }
 }));
 
-/* GET book detail form. */
+/**
+ * GET book detail form.
+ * Fetches the details of a book by its ID and renders the update form.
+ * @param {string} req.params.id - The ID of the book to fetch.
+ */
 router.get('/:id', asyncHandler(async (req, res, next) => {
     const book = await Book.findByPk(req.params.id);
     if (book) {
@@ -116,7 +144,12 @@ router.get('/:id', asyncHandler(async (req, res, next) => {
     }
 }));
 
-/* POST update book info. */
+/**
+ * POST update book info.
+ * Updates the information of a book by its ID.
+ * @param {string} req.params.id - The ID of the book to update.
+ * @param {Object} req.body - The updated book data.
+ */
 router.post('/:id', asyncHandler(async (req, res) => {
     let book;
     try {
@@ -138,7 +171,11 @@ router.post('/:id', asyncHandler(async (req, res) => {
     }
 }));
 
-/* Delete individual book */
+/**
+ * DELETE individual book.
+ * Deletes a book by its ID.
+ * @param {string} req.params.id - The ID of the book to delete.
+ */
 router.post('/:id/delete', asyncHandler(async (req, res) => {
     const book = await Book.findByPk(req.params.id);
     if (book) {
