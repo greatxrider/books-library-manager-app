@@ -122,11 +122,11 @@ The application uses a simple SQLite database named `library.db` with a single t
 | `createdAt` | DATE      | Date the record was created       |
 | `updatedAt` | DATE      | Date the record was last updated  |
 
-## Additional Notes
+## Additional Features
 
-- **Make Sure to Use a `.gitignore` File**: Ensure that the `node_modules` folder is not tracked in your GitHub repository by adding it to the `.gitignore` file.
-- **Regular Commits**: Make frequent commits to track the progress of your development and rollback changes if needed.
-- **Debugging Tips**: Use `console.log()` statements and browser developer tools to debug and troubleshoot issues.
+- Implemented .gitignore File: Made sure the node_modules folder isn't tracked in the GitHub repository by adding it to the .gitignore file.
+- Made Regular Commits: Committed changes frequently to track development progress and easily rollback if needed.
+- Enhanced Styling: Improved the look and feel of inputs, buttons, backgrounds, and effects for a more polished and user-friendly interface.
 
 ## License
 
